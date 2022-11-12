@@ -8,6 +8,8 @@ import Person4OutlinedIcon from '@mui/icons-material/Person4Outlined';
 import SettingsApplicationsOutlinedIcon from '@mui/icons-material/SettingsApplicationsOutlined';
 import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
 
+
+
 const NavMenu = () => {
   return (
     <Stack direction='column'>
@@ -24,6 +26,7 @@ const NavMenu = () => {
           gap="5"
           px="30px"
           mb="5"
+          color="primary"
         >
           <HomeIcon />
           <Text>Trang chủ</Text>
@@ -36,12 +39,12 @@ const NavMenu = () => {
           ml='auto'
           as={Link}
           to="/order"
-          shadow='base'
           borderLeftRadius='20px'
           justifyContent="start"
           gap="5"
           px="30px"
           mb="5"
+          color="blurColor"
         >
           <ReceiptOutlinedIcon />
           <Text>Phiếu nhận hàng</Text>
@@ -54,12 +57,12 @@ const NavMenu = () => {
           ml='auto'
           as={Link}
           to="/customer"
-          shadow='base'
           borderLeftRadius='20px'
           justifyContent="start"
           gap="5"
           px="30px"
           mb="5"
+          color="blurColor"
         >
           <Person4OutlinedIcon />
           <Text>Khách hàng</Text>
@@ -72,12 +75,12 @@ const NavMenu = () => {
           ml='auto'
           as={Link}
           to="statistical"
-          shadow='base'
           borderLeftRadius='20px'
           justifyContent="start"
           gap="5"
           px="30px"
           mb="5"
+          color="blurColor"
         >
           <SignalCellularAltOutlinedIcon />
           <Text>Thống kê</Text>
@@ -90,12 +93,12 @@ const NavMenu = () => {
           ml='auto'
           as={Link}
           to="/setting"
-          shadow='base'
           borderLeftRadius='20px'
           justifyContent="start"
           gap="5"
           px="30px"
           mb="5"
+          color="blurColor"
         >
           <SettingsApplicationsOutlinedIcon />
           <Text>Cài đặt</Text>
@@ -108,12 +111,12 @@ const NavMenu = () => {
           ml='auto'
           as={Link}
           to="/login"
-          shadow='base'
           borderLeftRadius='20px'
           justifyContent="start"
           gap="5"
           px="30px"
           mb="5"
+          color="blurColor"
         >
           <LogoutOutlinedIcon />
           <Text>Đăng xuất</Text>

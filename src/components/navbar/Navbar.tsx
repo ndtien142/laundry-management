@@ -6,7 +6,7 @@ const Navbar = () => {
     return (
         <Box>
             <Center flexDirection="column" mb="50px" mt="30px">
-                <Heading as="h1" textTransform="uppercase">Laundry</Heading>
+                <Heading as="h1" textTransform="uppercase" color="primary">Laundry</Heading>
             </Center>
             <NavMenu></NavMenu>
         </Box>

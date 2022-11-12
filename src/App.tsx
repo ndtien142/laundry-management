@@ -1,11 +1,17 @@
 import React from 'react';
-import { Container, Text } from "@chakra-ui/react"
+import { Route, Routes } from 'react-router-dom';
+import NotFound from './features/Error/NotFound';
 import Home from './features/Home';
+import Login from './features/Login/Login';
 
 function App() {
   return (
     <>
-      <Home></Home>
+      <Routes>
+        <Route element={<Home />} path="/" />
+        <Route element={<Login />} path="login" />
+        <Route element={<NotFound />} path="*" />
+      </Routes>
     </>
   );
 }
