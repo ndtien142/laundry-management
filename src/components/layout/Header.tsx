@@ -44,7 +44,7 @@ const Header = () => {
                     >
                         Admin
                     </MenuButton>
-                    <MenuList>
+                    <MenuList zIndex="100">
                         <MenuItem>Chi tiết</MenuItem>
                         <MenuItem>Chỉnh sửa thông tin</MenuItem>
                         <MenuItem>Đăng xuất</MenuItem>
