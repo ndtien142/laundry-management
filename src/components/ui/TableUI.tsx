@@ -16,6 +16,7 @@ import {
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import EditIcon from '@mui/icons-material/Edit';
+import PageviewIcon from '@mui/icons-material/Pageview';
 import React from 'react';
 
 interface Customer {
@@ -87,6 +88,9 @@ const TableUI = () => {
                                             borderRadius='50%'
                                         />
                                         <MenuList>
+                                            <MenuItem icon={<PageviewIcon />} alignItems="center">
+                                                Chi tiết đơn hàng
+                                            </MenuItem>
                                             <MenuItem icon={<EditIcon />}>Chỉnh sửa</MenuItem>
                                             <MenuItem icon={<DeleteOutlineIcon />}>
                                                 Xoá đơn hàng

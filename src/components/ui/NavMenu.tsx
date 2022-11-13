@@ -4,9 +4,9 @@ import { Link, useLocation } from 'react-router-dom';
 import HomeIcon from '@mui/icons-material/Home';
 import SignalCellularAltOutlinedIcon from '@mui/icons-material/SignalCellularAltOutlined';
 import ReceiptOutlinedIcon from '@mui/icons-material/ReceiptOutlined';
-import Person4OutlinedIcon from '@mui/icons-material/Person4Outlined';
 import SettingsApplicationsOutlinedIcon from '@mui/icons-material/SettingsApplicationsOutlined';
 import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
+import LocalLaundryServiceOutlinedIcon from '@mui/icons-material/LocalLaundryServiceOutlined';
 
 const NavMenu = () => {
   const location = useLocation()
@@ -65,8 +65,8 @@ const NavMenu = () => {
           shadow={location.pathname === "/customer" ? 'base' : "none"}
           color={location.pathname === "/customer" ? 'primary' : "blurColor"}
         >
-          <Person4OutlinedIcon />
-          <Text>Khách hàng</Text>
+          <LocalLaundryServiceOutlinedIcon />
+          <Text>Đơn giặt đồ</Text>
         </Button>
       </ButtonGroup>
       <ButtonGroup>

@@ -4,7 +4,6 @@ import NotFound from './features/Error/NotFound';
 import Home from './features/Home';
 import Login from './features/Login/Login';
 import Order from './features/Order';
-import CreateNewOrder from './features/Order/CreateNewOrder';
 
 function App() {
   return (
