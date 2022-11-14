@@ -1,15 +1,23 @@
 import React from 'react';
 import { Stack, ButtonGroup, Button, Text } from '@chakra-ui/react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import HomeIcon from '@mui/icons-material/Home';
 import SignalCellularAltOutlinedIcon from '@mui/icons-material/SignalCellularAltOutlined';
 import ReceiptOutlinedIcon from '@mui/icons-material/ReceiptOutlined';
 import SettingsApplicationsOutlinedIcon from '@mui/icons-material/SettingsApplicationsOutlined';
 import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
 import LocalLaundryServiceOutlinedIcon from '@mui/icons-material/LocalLaundryServiceOutlined';
+import { useAppDispatch } from '../../redux/hooks';
+import { resetInfoUserLogin } from '../../features/Login/LoginSlice';
 
 const NavMenu = () => {
+  const navigate = useNavigate()
   const location = useLocation()
+  const dispatch = useAppDispatch()
+  const handleUserLogout = () => {
+    dispatch(resetInfoUserLogin())
+    navigate("/login")
+  }
   return (
     <Stack direction='column'>
       <ButtonGroup>
@@ -112,14 +120,13 @@ const NavMenu = () => {
           bg='#fff'
           width='90%'
           ml='auto'
-          as={Link}
-          to='/login'
           borderLeftRadius='20px'
           justifyContent='start'
           gap='5'
           px='30px'
           mb='5'
           color="blurColor"
+          onClick={handleUserLogout}
         >
           <LogoutOutlinedIcon />
           <Text>Đăng xuất</Text>

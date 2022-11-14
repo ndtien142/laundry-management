@@ -29,10 +29,10 @@ const CreateNewOrder = () => {
         register,
         handleSubmit,
         setError,
+        clearErrors,
         formState: { errors },
     } = useForm<CreateOrderInputs>();
     const navigate = useNavigate();
-    console.log('re-render');
     const onSubmit: SubmitHandler<CreateOrderInputs> = (data) => {
         console.log(errors?.customerName?.message);
         console.log(data);
@@ -63,6 +63,9 @@ const CreateNewOrder = () => {
                                                 message: 'Tên khách hàng không được trống!',
                                             });
                                     },
+                                    onChange: e => {
+                                        clearErrors("customerName")
+                                    }
                                 })}
                             />
                             {errors.customerName ? (
@@ -86,9 +89,12 @@ const CreateNewOrder = () => {
                                                 message: 'Vui lòng chọn ngày nhận',
                                             });
                                     },
+                                    onChange: (e) => {
+                                        clearErrors("date")
+                                    }
                                 })}
                             />
-                            {errors.customerName ? (
+                            {errors.customerName?.type === "required" ? (
                                 <FormErrorMessage>
                                     {errors.date?.message}
                                 </FormErrorMessage>

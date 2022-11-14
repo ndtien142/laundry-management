@@ -7,18 +7,23 @@ import { BrowserRouter } from 'react-router-dom'
 import { customTheme } from './utils/theme';
 import { Provider } from "react-redux"
 import { store } from './redux/store';
+import { QueryClientProvider, QueryClient } from "@tanstack/react-query"
+
+const client = new QueryClient()
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
   <React.StrictMode>
-    <Provider store={store}>
-      <BrowserRouter>
-        <ChakraProvider theme={customTheme}>
-          <App />
-        </ChakraProvider>
-      </BrowserRouter>
-    </Provider>
+    <QueryClientProvider client={client}>
+      <Provider store={store}>
+        <BrowserRouter>
+          <ChakraProvider theme={customTheme}>
+            <App />
+          </ChakraProvider>
+        </BrowserRouter>
+      </Provider>
+    </QueryClientProvider>
   </React.StrictMode>
 );

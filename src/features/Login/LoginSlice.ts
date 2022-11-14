@@ -2,26 +2,36 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface LoginState {
   email: string;
-  password: string;
+  idToken: string | null;
+  isAuthentication: boolean;
+}
+interface UserLogin {
+  email: string;
+  idToken: string | null;
 }
 
 const initialState: LoginState = {
   email: '',
-  password: '',
+  idToken: null,
+  isAuthentication: false,
 };
 
 const LoginSlice = createSlice({
   name: 'login',
   initialState,
   reducers: {
-    setEmailChange: (state, action: PayloadAction<string>) => {
-      state.email = action.payload;
+    setInfoUserLogin: (state, action: PayloadAction<UserLogin>) => {
+      state.email = action.payload.email;
+      state.idToken = action.payload.idToken;
+      state.isAuthentication = true;
     },
-    setPasswordChange: (state, action: PayloadAction<string>) => {
-      state.password = action.payload;
+    resetInfoUserLogin: (state) => {
+      state.email = '';
+      state.idToken = null;
+      state.isAuthentication = false;
     },
   },
 });
 
-export const { setEmailChange, setPasswordChange } = LoginSlice.actions;
+export const { setInfoUserLogin, resetInfoUserLogin } = LoginSlice.actions;
 export default LoginSlice.reducer;
