@@ -1,12 +1,22 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Layout from '../../components/layout/Layout';
 import { Center } from "@chakra-ui/react"
 import Widget from '../../components/ui/Widget';
 import HeaderTable from '../../components/ui/HeaderTable';
 import TableUI from '../../components/ui/TableUI';
+import { getAllOrder } from '../../api/OrderApi';
+import { useQuery } from '@tanstack/react-query';
+import { useAppDispatch } from '../../redux/hooks';
+import { replaceAllOrder } from '../Order/OrderSlice';
+import TableUILoadingSkeleton from '../../components/loading/TableUILoadingSkeleton';
 
 
 const Home = () => {
+    const { data, isSuccess } = useQuery(["order"], getAllOrder)
+    const dispatch = useAppDispatch()
+    useEffect(() => {
+        isSuccess && dispatch(replaceAllOrder(data))
+    }, [data, isSuccess, dispatch])
     return (
         <Layout>
             <>

@@ -64,14 +64,14 @@ const NavMenu = () => {
           width='90%'
           ml='auto'
           as={Link}
-          to='/customer'
+          to='/laundry'
           borderLeftRadius='20px'
           justifyContent='start'
           gap='5'
           px='30px'
           mb='5'
-          shadow={location.pathname === "/customer" ? 'base' : "none"}
-          color={location.pathname === "/customer" ? 'primary' : "blurColor"}
+          shadow={location.pathname === "/laundry" ? 'base' : "none"}
+          color={location.pathname === "/laundry" ? 'primary' : "blurColor"}
         >
           <LocalLaundryServiceOutlinedIcon />
           <Text>Đơn giặt đồ</Text>

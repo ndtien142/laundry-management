@@ -6,6 +6,7 @@ import Home from './features/Home';
 import Login from './features/Login/Login';
 import Order from './features/Order';
 import { useAppSelector } from './redux/hooks';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 
 function App() {
   const authContext = useAppSelector(state => state.userLogin)
@@ -31,6 +32,7 @@ function App() {
           )
         }
       </Routes>
+      <ReactQueryDevtools />
     </>
   );
 }

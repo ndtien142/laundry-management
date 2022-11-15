@@ -13,29 +13,31 @@ import {
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { Textarea } from '@chakra-ui/react';
+import { Order } from '../../types/OrderInterface';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
+import { addNewOrder } from './OrderSlice';
+import { useMutation } from '@tanstack/react-query';
+import { postNewOrder } from '../../api/OrderApi';
 
-interface CreateOrderInputs {
-    id: string | number;
-    customerName: string;
-    date: Date | string;
-    dateDelivery: Date | string;
-    employeeId: string | number;
-    note: string;
-    status: 'Completed' | 'Pending' | 'Process';
-}
 
 const CreateNewOrder = () => {
+    const { mutate: createNewOrder } = useMutation(postNewOrder)
     const {
         register,
         handleSubmit,
         setError,
         clearErrors,
+        reset,
         formState: { errors },
-    } = useForm<CreateOrderInputs>();
+    } = useForm<Order>();
     const navigate = useNavigate();
-    const onSubmit: SubmitHandler<CreateOrderInputs> = (data) => {
-        console.log(errors?.customerName?.message);
-        console.log(data);
+    const dispatch = useAppDispatch()
+    const getNextId = useAppSelector(state => state.order.nextId)
+    const onSubmit: SubmitHandler<Order> = (data) => {
+        dispatch(addNewOrder(data))
+        createNewOrder({ ...data, status: "Pending", id: getNextId })
+        console.log({ ...data, status: "Pending", id: getNextId })
+        reset()
     };
     return (
         <>
@@ -48,55 +50,55 @@ const CreateNewOrder = () => {
                         <FormControl
                             minWidth='320px'
                             width='325px'
-                            isInvalid={errors.customerName ? true : false}
+                            isInvalid={errors.name ? true : false}
                         >
-                            <FormLabel htmlFor='customerName'>Tên khách hàng</FormLabel>
+                            <FormLabel htmlFor='name'>Tên khách hàng</FormLabel>
                             <Input
                                 type='text'
                                 placeholder='Tên khách hàng'
-                                {...register('customerName', {
+                                {...register('name', {
                                     required: 'Tên khách hàng không được trống!',
                                     onBlur: (e) => {
                                         if (e.target.value.trim().length < 2)
-                                            setError('customerName', {
+                                            setError('name', {
                                                 type: 'required',
                                                 message: 'Tên khách hàng không được trống!',
                                             });
                                     },
                                     onChange: e => {
-                                        clearErrors("customerName")
+                                        clearErrors("name")
                                     }
                                 })}
                             />
-                            {errors.customerName ? (
+                            {errors.name ? (
                                 <FormErrorMessage>
-                                    {errors.customerName?.message}
+                                    {errors.name?.message}
                                 </FormErrorMessage>
                             ) : (
                                 <FormHelperText color='#FFF'>|</FormHelperText>
                             )}
                         </FormControl>
-                        <FormControl minWidth='320px' width='325px' isInvalid={errors.date ? true : false}>
+                        <FormControl minWidth='320px' width='325px' isInvalid={errors.dayOfReceive ? true : false}>
                             <FormLabel htmlFor='date'>Ngày nhận đơn</FormLabel>
                             <Input
                                 type='date'
-                                {...register('date', {
+                                {...register('dayOfReceive', {
                                     required: 'Tên khách hàng không được trống!',
                                     onBlur: (e) => {
                                         if (e.target.value.trim().length < 2)
-                                            setError('date', {
+                                            setError('dayOfReceive', {
                                                 type: 'required',
                                                 message: 'Vui lòng chọn ngày nhận',
                                             });
                                     },
                                     onChange: (e) => {
-                                        clearErrors("date")
+                                        clearErrors("dayOfReceive")
                                     }
                                 })}
                             />
-                            {errors.customerName?.type === "required" ? (
+                            {errors.dayOfReceive?.type === "required" ? (
                                 <FormErrorMessage>
-                                    {errors.date?.message}
+                                    {errors.dayOfReceive?.message}
                                 </FormErrorMessage>
                             ) : (
                                 <FormHelperText color='#FFF'>|</FormHelperText>
@@ -106,7 +108,7 @@ const CreateNewOrder = () => {
                             <FormLabel htmlFor='customerName'>Ngày hẹn giao</FormLabel>
                             <Input
                                 type='date'
-                                {...register('dateDelivery')}
+                                {...register('dayOfAppointment')}
                             // value={result}
                             />
                             <FormErrorMessage>{ }</FormErrorMessage>
