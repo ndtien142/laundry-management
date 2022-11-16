@@ -1,13 +1,12 @@
 import { Table, Thead, Tbody, Tr, Th, TableContainer } from '@chakra-ui/react';
 import React from 'react';
-import { useGetAllOrder } from '../../hooks/getAllOrder';
+import { useGetAllOrder } from '../../hooks/useGetAllOrder';
 import { Order } from '../../types/OrderInterface';
 import TableUILoadingSkeleton from '../loading/TableUILoadingSkeleton';
 import RowTableUI from './RowTableUI';
 
 const TableUI = () => {
     const { data, status } = useGetAllOrder()
-    console.log("re-render")
     const transData: Order[] = [];
     if (status === 'loading') return <TableUILoadingSkeleton />;
     if (status === 'success') {

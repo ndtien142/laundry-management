@@ -13,21 +13,18 @@ import {
     FormHelperText,
     FormErrorMessage,
 } from '@chakra-ui/react';
-import { SubmitHandler, useForm } from 'react-hook-form';
+import { SubmitHandler } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { getDataUser } from '../../api/AuthContextAPI';
 import { useAppDispatch } from '../../redux/hooks';
 import { setInfoUserLogin } from './LoginSlice';
-import { useMutation } from "@tanstack/react-query"
-import { useEffect } from "react"
+import { useMutation } from '@tanstack/react-query';
+import { useEffect } from 'react';
+import { LoginState, useLoginValidation } from '../../hooks/useLoginValidation';
 
-interface LoginState {
-    email: string;
-    password: string;
-}
 interface LoginPayload {
     email: string;
-    idToken: string | null
+    idToken: string | null;
 }
 
 export default function Login() {
@@ -35,20 +32,27 @@ export default function Login() {
         register,
         handleSubmit,
         formState: { errors },
-    } = useForm<LoginState>();
+    } = useLoginValidation();
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
-    const { mutate: loginMutation, isSuccess } = useMutation(["userLogin"], getDataUser, {
-        onSuccess: (data) => {
-            const result: LoginPayload = { email: data.data.email, idToken: data.data.idToken }
-            dispatch(setInfoUserLogin({ ...result }))
+    const { mutate: loginMutation, isSuccess } = useMutation(
+        ['userLogin'],
+        getDataUser,
+        {
+            onSuccess: (data) => {
+                const result: LoginPayload = {
+                    email: data.data.email,
+                    idToken: data.data.idToken,
+                };
+                dispatch(setInfoUserLogin({ ...result }));
+            },
         }
-    })
+    );
     useEffect(() => {
-        isSuccess && navigate("/")
-    }, [isSuccess, navigate])
+        isSuccess && navigate('/');
+    }, [isSuccess, navigate]);
     const onSubmit: SubmitHandler<LoginState> = (data) => {
-        loginMutation({ email: data.email, password: data.password })
+        loginMutation({ email: data.email, password: data.password });
     };
     return (
         <Flex
@@ -73,12 +77,7 @@ export default function Login() {
                         <Stack>
                             <FormControl id='email' isInvalid={errors?.email ? true : false}>
                                 <FormLabel>Email</FormLabel>
-                                <Input
-                                    type='email'
-                                    {...register('email', {
-                                        required: 'Email không được để trống!',
-                                    })}
-                                />
+                                <Input type='email' {...register('email')} />
                                 {errors?.email ? (
                                     <FormErrorMessage>{errors.email.message}</FormErrorMessage>
                                 ) : (
@@ -90,16 +89,7 @@ export default function Login() {
                                 isInvalid={errors?.password ? true : false}
                             >
                                 <FormLabel>Mật khẩu</FormLabel>
-                                <Input
-                                    type='password'
-                                    {...register('password', {
-                                        required: 'Mật khẩu không được để trống!',
-                                        minLength: {
-                                            value: 6,
-                                            message: 'Mật khẩu phải lớn hơn 6 kí tự!',
-                                        },
-                                    })}
-                                />
+                                <Input type='password' {...register('password')} />
                                 {errors?.password ? (
                                     <FormErrorMessage>{errors.password.message}</FormErrorMessage>
                                 ) : (

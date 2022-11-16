@@ -6,6 +6,7 @@ import CreateNewOrder from './CreateNewOrder';
 import NotFound from '../Error/NotFound';
 import DisplayAllOrder from './DisplayAllOrder';
 import CreateDetailOrder from './CreateDetailOrder';
+import OrderDetail from './OrderDetail';
 
 const Order = () => {
     return (
@@ -15,6 +16,7 @@ const Order = () => {
                     <Route element={<DisplayAllOrder />} path="/" />
                     <Route element={<CreateNewOrder />} path="create-order" />
                     <Route element={<CreateDetailOrder />} path="create-detail-order" />
+                    <Route element={<OrderDetail />} path="/:orderId" />
                     <Route element={<NotFound />} path="*" />
                 </Routes>
             </>

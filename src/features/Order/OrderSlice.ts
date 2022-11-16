@@ -29,10 +29,7 @@ const OrderSlice = createSlice({
       });
       state.order.splice(indexOfDelete, 1);
     },
-    replaceAllOrder: (state, action) => {
-      console.log(action.payload);
-      // state.order = action.payload;
-    },
+    replaceAllOrder: (state, action) => {},
   },
 });
 

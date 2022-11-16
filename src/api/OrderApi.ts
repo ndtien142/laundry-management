@@ -16,8 +16,18 @@ export const getAllOrder = async () => {
 };
 
 export const postNewOrder = async (order: Order) => {
-  const response = await apiOrder.put<any>(`/order/${order.id}.json`, {
-    ...order,
+  const response = await apiOrder.put<Order>(`/order/${order.id}.json`, {
+    name: order.name,
+    dayOfReceive: order.dayOfReceive,
+    dayOfAppointment: order.dayOfAppointment,
+    status: order.status,
+    note: order.note,
   });
+  return response.data;
+};
+
+export const getDetailOrder = async ({ queryKey }: any) => {
+  const [_, orderId] = queryKey;
+  const response = await apiOrder.get<Order>(`/order/${orderId}.json`);
   return response.data;
 };

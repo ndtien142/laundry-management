@@ -2,7 +2,7 @@ import { Grid, GridItem } from '@chakra-ui/react';
 import React from 'react';
 import NewBillLaundry from '../../components/ui/BillLaundry/NewBillLaundry';
 import SearchServices from '../../components/ui/SearchServices';
-import ServicesUI from '../../components/ui/ServicesUI/ServicesUI';
+import ServicesUI from '../../components/ui/ServicesCardUI/ServicesUI';
 
 const CreateDetailOrder = () => {
     return (

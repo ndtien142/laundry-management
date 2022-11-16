@@ -1,6 +1,6 @@
 import React from 'react'
 import { Box, Heading, Center } from '@chakra-ui/react'
-import NavMenu from '../ui/NavMenu'
+import NavMenu from './NavMenu'
 
 const Navbar = () => {
     return (

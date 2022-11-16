@@ -1,4 +1,4 @@
-import React, { } from 'react';
+import React from 'react';
 import {
     Badge,
     IconButton,
@@ -15,6 +15,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import PageviewIcon from '@mui/icons-material/Pageview';
 import { useAppDispatch } from '../../redux/hooks';
 import { deleteOrder } from '../../features/Order/OrderSlice';
+import { Link as RouteLink, useLocation } from 'react-router-dom';
 
 interface Props {
     id: number | string;
@@ -25,6 +26,7 @@ interface Props {
 
 const RowTableUI: React.FC<Props> = ({ id, name, status, dayOfReceive }) => {
     const dispatch = useAppDispatch();
+    const location = useLocation();
     const handleDeleteOrder = () => dispatch(deleteOrder(id));
     return (
         <>
@@ -56,7 +58,14 @@ const RowTableUI: React.FC<Props> = ({ id, name, status, dayOfReceive }) => {
                             borderRadius='50%'
                         />
                         <MenuList>
-                            <MenuItem icon={<PageviewIcon />} alignItems='center'>
+                            <MenuItem
+                                icon={<PageviewIcon />}
+                                alignItems='center'
+                                as={RouteLink}
+                                to={
+                                    location.pathname.includes('order') ? `${id}` : `order/${id}`
+                                }
+                            >
                                 Chi tiết đơn hàng
                             </MenuItem>
                             <MenuItem icon={<EditIcon />}>Chỉnh sửa</MenuItem>
