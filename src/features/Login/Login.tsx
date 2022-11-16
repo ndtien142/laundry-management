@@ -36,7 +36,6 @@ export default function Login() {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
     const { mutate: loginMutation, isSuccess } = useMutation(
-        ['userLogin'],
         getDataUser,
         {
             onSuccess: (data) => {

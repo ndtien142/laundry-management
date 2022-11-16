@@ -7,7 +7,7 @@ import { Link as RouteLink } from "react-router-dom"
 const DisplayAllOrder = () => {
     return (
         <>
-            <Center>
+            <Center mb="5">
                 <Text>Tổng đơn hàng trong kho</Text>
                 <Button leftIcon={<AddIcon />} colorScheme="whatsapp" ml="auto" minWidth="150px" as={RouteLink} to="create-order">Thêm đơn hàng</Button>
             </Center>

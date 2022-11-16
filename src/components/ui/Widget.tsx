@@ -13,11 +13,13 @@ const Widget: React.FC<Props> = ({ path, bgc, title, quantity }) => {
     return (
         <Box
             width='100%'
-            maxWidth='300'
+            maxWidth={{ base: "", lg: '300' }}
             borderRadius='10'
             p='5'
             bgColor={bgc}
             color='white'
+            display={{ base: "flex", lg: "block" }}
+            alignItems="center"
         >
             <Flex gap='5' alignItems='center'>
                 <Box

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Stack, ButtonGroup, Button, Text } from '@chakra-ui/react';
+import { Stack, ButtonGroup, Button, Text, Box } from '@chakra-ui/react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import HomeIcon from '@mui/icons-material/Home';
 import SignalCellularAltOutlinedIcon from '@mui/icons-material/SignalCellularAltOutlined';
@@ -9,20 +9,21 @@ import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
 import LocalLaundryServiceOutlinedIcon from '@mui/icons-material/LocalLaundryServiceOutlined';
 import { useAppDispatch } from '../../redux/hooks';
 import { resetInfoUserLogin } from '../../features/Login/LoginSlice';
+import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 
 const NavMenu = () => {
-  const navigate = useNavigate()
-  const location = useLocation()
-  const dispatch = useAppDispatch()
+  const navigate = useNavigate();
+  const location = useLocation();
+  const dispatch = useAppDispatch();
   const handleUserLogout = () => {
-    dispatch(resetInfoUserLogin())
-    navigate("/login")
-  }
+    dispatch(resetInfoUserLogin());
+    navigate('/login');
+  };
   return (
     <Stack direction='column'>
       <ButtonGroup>
         <Button
-          bg="#FFF"
+          bg='#FFF'
           width='90%'
           ml='auto'
           as={Link}
@@ -32,8 +33,8 @@ const NavMenu = () => {
           gap='5'
           px='30px'
           mb='5'
-          shadow={location.pathname === "/" ? 'base' : "none"}
-          color={location.pathname === "/" ? 'primary' : "blurColor"}
+          shadow={location.pathname === '/' ? 'base' : 'none'}
+          color={location.pathname === '/' ? 'primary' : 'blurColor'}
         >
           <HomeIcon />
           <Text>Trang chủ</Text>
@@ -51,8 +52,8 @@ const NavMenu = () => {
           gap='5'
           px='30px'
           mb='5'
-          shadow={location.pathname.includes("/order") ? 'base' : "none"}
-          color={location.pathname.includes("/order") ? 'primary' : "blurColor"}
+          shadow={location.pathname.includes('/order') ? 'base' : 'none'}
+          color={location.pathname.includes('/order') ? 'primary' : 'blurColor'}
         >
           <ReceiptOutlinedIcon />
           <Text>Phiếu nhận hàng</Text>
@@ -70,8 +71,8 @@ const NavMenu = () => {
           gap='5'
           px='30px'
           mb='5'
-          shadow={location.pathname === "/laundry" ? 'base' : "none"}
-          color={location.pathname === "/laundry" ? 'primary' : "blurColor"}
+          shadow={location.pathname === '/laundry' ? 'base' : 'none'}
+          color={location.pathname === '/laundry' ? 'primary' : 'blurColor'}
         >
           <LocalLaundryServiceOutlinedIcon />
           <Text>Đơn giặt đồ</Text>
@@ -89,8 +90,8 @@ const NavMenu = () => {
           gap='5'
           px='30px'
           mb='5'
-          shadow={location.pathname === "/statistical" ? 'base' : "none"}
-          color={location.pathname === "/statistical" ? 'primary' : "blurColor"}
+          shadow={location.pathname === '/statistical' ? 'base' : 'none'}
+          color={location.pathname === '/statistical' ? 'primary' : 'blurColor'}
         >
           <SignalCellularAltOutlinedIcon />
           <Text>Thống kê</Text>
@@ -108,8 +109,8 @@ const NavMenu = () => {
           gap='5'
           px='30px'
           mb='5'
-          shadow={location.pathname === "/setting" ? 'base' : "none"}
-          color={location.pathname === "/setting" ? 'primary' : "blurColor"}
+          shadow={location.pathname === '/setting' ? 'base' : 'none'}
+          color={location.pathname === '/setting' ? 'primary' : 'blurColor'}
         >
           <SettingsApplicationsOutlinedIcon />
           <Text>Cài đặt</Text>
@@ -125,13 +126,24 @@ const NavMenu = () => {
           gap='5'
           px='30px'
           mb='5'
-          color="blurColor"
+          color='blurColor'
           onClick={handleUserLogout}
         >
           <LogoutOutlinedIcon />
           <Text>Đăng xuất</Text>
         </Button>
       </ButtonGroup>
+      <Box textAlign='center' pb='20px' color='white' display={{ lg: 'none' }}>
+        <Button
+          width='50px'
+          height='50px'
+          borderRadius='50%'
+          bgColor='primary'
+          cursor='pointer'
+        >
+          <ArrowBackIosNewIcon />
+        </Button>
+      </Box>
     </Stack>
   );
 };

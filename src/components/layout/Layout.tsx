@@ -11,11 +11,17 @@ interface Props {
 const Layout: React.FC<Props> = ({ children }) => {
     return (
         <Grid
-            templateAreas={`"nav header"
+            templateAreas={{
+                lg: `"nav header"
                   "nav main"
-                  "nav footer"`}
-            gridTemplateRows={'110px 1fr 65px'}
-            gridTemplateColumns={'280px 1fr'}
+                  "nav footer"`,
+                base: `"header"
+                    "main"
+                    "footer"
+                `
+            }}
+            gridTemplateRows={{ lg: '110px 1fr 65px' }}
+            gridTemplateColumns={{ lg: '280px 1fr' }}
             h='100vh'
             color='blackAlpha.700'
             fontWeight='bold'
@@ -27,7 +33,7 @@ const Layout: React.FC<Props> = ({ children }) => {
             <GridItem area="footer" bg="f8f8f8">
                 <Footer />
             </GridItem>
-            <GridItem area="nav" bg="#fff" shadow="2xl">
+            <GridItem area="nav" bg="#fff" shadow="2xl" display={{ lg: "block" }} position={{ base: "absolute", lg: "relative" }} zIndex="100" height="100%">
                 <Navbar />
             </GridItem>
         </Grid>

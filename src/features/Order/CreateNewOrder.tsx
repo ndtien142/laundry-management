@@ -19,9 +19,8 @@ import { addNewOrder } from './OrderSlice';
 import { useMutation } from '@tanstack/react-query';
 import { postNewOrder } from '../../api/OrderApi';
 
-
 const CreateNewOrder = () => {
-    const { mutate: createNewOrder } = useMutation(postNewOrder)
+    const { mutate: createNewOrder } = useMutation(postNewOrder);
     const {
         register,
         handleSubmit,
@@ -31,25 +30,25 @@ const CreateNewOrder = () => {
         formState: { errors },
     } = useForm<Order>();
     const navigate = useNavigate();
-    const dispatch = useAppDispatch()
-    const getNextId = useAppSelector(state => state.order.nextId)
+    const dispatch = useAppDispatch();
+    const getNextId = useAppSelector((state) => state.order.nextId);
     const onSubmit: SubmitHandler<Order> = (data) => {
-        dispatch(addNewOrder(data))
-        createNewOrder({ ...data, status: "Pending", id: getNextId })
-        console.log({ ...data, status: "Pending", id: getNextId })
-        reset()
+        dispatch(addNewOrder(data));
+        createNewOrder({ ...data, status: 'Pending', id: getNextId });
+        console.log({ ...data, status: 'Pending', id: getNextId });
+        reset();
     };
     return (
         <>
             <Heading as='h3' mb='3'>
                 Tạo phiếu nhận hàng mới
             </Heading>
-            <Box bgColor='#FFF' p='5' borderRadius='10' shadow='2xl'>
-                <form onSubmit={handleSubmit(onSubmit)}>
+            <form onSubmit={handleSubmit(onSubmit)}>
+                <Box bgColor='#FFF' p='5' borderRadius='10' shadow='2xl'>
                     <Flex mb='5' gap='5' flexWrap='wrap' rowGap='0'>
                         <FormControl
-                            minWidth='320px'
-                            width='325px'
+                            minWidth={{ md: '320px' }}
+                            width={{ base: '100%', md: '325px' }}
                             isInvalid={errors.name ? true : false}
                         >
                             <FormLabel htmlFor='name'>Tên khách hàng</FormLabel>
@@ -65,20 +64,22 @@ const CreateNewOrder = () => {
                                                 message: 'Tên khách hàng không được trống!',
                                             });
                                     },
-                                    onChange: e => {
-                                        clearErrors("name")
-                                    }
+                                    onChange: (e) => {
+                                        clearErrors('name');
+                                    },
                                 })}
                             />
                             {errors.name ? (
-                                <FormErrorMessage>
-                                    {errors.name?.message}
-                                </FormErrorMessage>
+                                <FormErrorMessage>{errors.name?.message}</FormErrorMessage>
                             ) : (
                                 <FormHelperText color='#FFF'>|</FormHelperText>
                             )}
                         </FormControl>
-                        <FormControl minWidth='320px' width='325px' isInvalid={errors.dayOfReceive ? true : false}>
+                        <FormControl
+                            minWidth={{ md: '320px' }}
+                            width={{ base: '100%', md: '325px' }}
+                            isInvalid={errors.dayOfReceive ? true : false}
+                        >
                             <FormLabel htmlFor='date'>Ngày nhận đơn</FormLabel>
                             <Input
                                 type='date'
@@ -92,11 +93,11 @@ const CreateNewOrder = () => {
                                             });
                                     },
                                     onChange: (e) => {
-                                        clearErrors("dayOfReceive")
-                                    }
+                                        clearErrors('dayOfReceive');
+                                    },
                                 })}
                             />
-                            {errors.dayOfReceive?.type === "required" ? (
+                            {errors.dayOfReceive?.type === 'required' ? (
                                 <FormErrorMessage>
                                     {errors.dayOfReceive?.message}
                                 </FormErrorMessage>
@@ -104,7 +105,10 @@ const CreateNewOrder = () => {
                                 <FormHelperText color='#FFF'>|</FormHelperText>
                             )}
                         </FormControl>
-                        <FormControl minWidth='320px' width='325px'>
+                        <FormControl
+                            minWidth={{ md: '320px' }}
+                            width={{ base: '100%', md: '325px' }}
+                        >
                             <FormLabel htmlFor='customerName'>Ngày hẹn giao</FormLabel>
                             <Input
                                 type='date'
@@ -113,7 +117,10 @@ const CreateNewOrder = () => {
                             />
                             <FormErrorMessage>{ }</FormErrorMessage>
                         </FormControl>
-                        <FormControl minWidth='320px' width='325px'>
+                        <FormControl
+                            minWidth={{ md: '320px' }}
+                            width={{ base: '100%', md: '325px' }}
+                        >
                             <FormLabel htmlFor='customerName'>Ghi chú</FormLabel>
                             <Textarea {...register('note')} placeholder='ghi chú thêm' />
                             <FormErrorMessage>{ }</FormErrorMessage>
@@ -127,8 +134,8 @@ const CreateNewOrder = () => {
                             Huỷ
                         </Button>
                     </Box>
-                </form>
-            </Box>
+                </Box>
+            </form>
         </>
     );
 };

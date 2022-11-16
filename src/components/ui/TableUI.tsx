@@ -18,13 +18,15 @@ const TableUI = () => {
     return (
         <TableContainer
             bgColor='#FFF'
-            my='5'
             borderRadius='10'
             as='section'
-            overflowY='auto'
-            maxHeight='480px'
+            overflowY="auto"
+            overflowX="auto"
+            width="100%"
+            maxWidth={{ base: "390px", md: "640px", lg: "none" }}
+            height="400px"
         >
-            <Table variant='simple' overflow='auto' height='100px'>
+            <Table variant='simple'>
                 <Thead position='sticky' top={0} bgColor='#FFF' zIndex='10'>
                     <Tr>
                         <Th>Mã đơn hàng</Th>
@@ -48,7 +50,7 @@ const TableUI = () => {
                     })}
                 </Tbody>
             </Table>
-        </TableContainer>
+        </TableContainer >
     );
 };
 
