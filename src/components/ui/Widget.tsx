@@ -29,7 +29,7 @@ const Widget: React.FC<Props> = ({ path, bgc, title, quantity }) => {
                 </Box>
                 <Box>
                     <Text fontSize='30'>{quantity}</Text>
-                    <Text>{title}</Text>
+                    <Text whiteSpace={{ lg: "nowrap" }}>{title}</Text>
                 </Box>
             </Flex>
             <Center textAlign="center" width="170px" color={bgc} bgColor="#fff" borderRadius="10" justifyContent="space-evenly" mx="auto" fontSize="14px" mt="2">

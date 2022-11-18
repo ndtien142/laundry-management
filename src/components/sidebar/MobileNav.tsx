@@ -10,7 +10,6 @@ import {
     MenuItem,
     MenuList,
     Text,
-    useColorModeValue,
     VStack,
 } from '@chakra-ui/react';
 import { MobileProps } from './interfaceSideBar';
@@ -26,7 +25,7 @@ export const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
             height='20'
             alignItems='center'
             borderBottomWidth='1px'
-            borderBottomColor={useColorModeValue('gray.200', 'gray.700')}
+            borderBottomColor="grey"
             justifyContent={{ base: 'space-between', md: 'flex-end' }}
             {...rest}
         >
@@ -41,7 +40,6 @@ export const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
             <Text
                 display={{ base: 'flex', md: 'none' }}
                 fontSize='2xl'
-                fontFamily='monospace'
                 fontWeight='bold'
                 as={RouteLink}
                 to='/'
@@ -81,8 +79,8 @@ export const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
                             </HStack>
                         </MenuButton>
                         <MenuList
-                            bg={useColorModeValue('white', 'gray.900')}
-                            borderColor={useColorModeValue('gray.200', 'gray.700')}
+                            bg="whiteColor"
+                            borderColor="grey"
                             zIndex='100'
                         >
                             <MenuItem>Thông tin cá nhân</MenuItem>

@@ -19,7 +19,7 @@ export default function SidebarWithHeader({
     return (
         <Grid
             minH='100vh'
-            bgColor="#F8F8F8"
+            bgColor="mainBg"
             gridTemplateAreas={{
                 md: `"nav header"
                     "nav main"
@@ -56,7 +56,7 @@ export default function SidebarWithHeader({
             <GridItem bgColor="mainBg" area='header'>
                 <MobileNav onOpen={onOpen} />
             </GridItem>
-            <GridItem bgColor="mainBg" area='main' p="4">
+            <GridItem bgColor="mainBg" area='main' p="4" maxWidth={{ base: "320px", md: "800px", lg: "1000px", xl: "1150px" }} mx="auto" width="100%">
                 {children}
             </GridItem>
             <GridItem bgColor="mainBg" area='footer'>

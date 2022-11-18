@@ -9,34 +9,39 @@ import {
     Button,
     Flex,
     FormHelperText,
+    Text,
 } from '@chakra-ui/react';
-import { useForm, SubmitHandler } from 'react-hook-form';
+import { SubmitHandler } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { Textarea } from '@chakra-ui/react';
 import { Order } from '../../types/OrderInterface';
-import { useAppDispatch, useAppSelector } from '../../redux/hooks';
-import { addNewOrder } from './OrderSlice';
-import { useMutation } from '@tanstack/react-query';
-import { postNewOrder } from '../../api/OrderApi';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { getNextIdOrder, postNewNextId, postNewOrder } from '../../api/OrderApi';
+import { useCreateOrderValidation } from '../../hooks/useCreateOrderValidation';
+import { Spinner } from '@chakra-ui/react';
 
 const CreateNewOrder = () => {
+    const navigate = useNavigate()
+    const queryClient = useQueryClient()
+    const { data: getNextId } = useQuery(['nextId'], getNextIdOrder, {
+        staleTime: Infinity,
+    });
     const { mutate: createNewOrder } = useMutation(postNewOrder);
+    const { mutate: postNextId } = useMutation(postNewNextId, {
+        onSuccess: () => {
+            queryClient.invalidateQueries(["nextId"])
+        }
+    })
     const {
         register,
         handleSubmit,
-        setError,
-        clearErrors,
-        reset,
         formState: { errors },
-    } = useForm<Order>();
-    const navigate = useNavigate();
-    const dispatch = useAppDispatch();
-    const getNextId = useAppSelector((state) => state.order.nextId);
+    } = useCreateOrderValidation();
     const onSubmit: SubmitHandler<Order> = (data) => {
-        dispatch(addNewOrder(data));
-        createNewOrder({ ...data, status: 'Pending', id: getNextId });
-        console.log({ ...data, status: 'Pending', id: getNextId });
-        reset();
+        // createNewOrder({ ...data, status: 'Pending', id: getNextId });
+        // console.log({ ...data, status: 'Pending', id: getNextId });
+        postNextId(Number(getNextId) + 1)
+        navigate("/order")
     };
     return (
         <>
@@ -46,6 +51,21 @@ const CreateNewOrder = () => {
             <form onSubmit={handleSubmit(onSubmit)}>
                 <Box bgColor='#FFF' p='5' borderRadius='10' shadow='2xl'>
                     <Flex mb='5' gap='5' flexWrap='wrap' rowGap='0'>
+                        <Box
+                            minWidth={{ md: '320px' }}
+                            width={{ base: '100%', md: '325px' }}
+                            mb={{ base: "5", lg: "" }}
+                        >
+                            <Text mb="2" fontWeight="semibold">Mã đơn hàng</Text>
+                            <Button
+                                disabled
+                                width="100%"
+                                fontWeight='700'
+                                border="1px solid black"
+                                color="red"
+                            >{getNextId ? getNextId : <Spinner />}</Button>
+
+                        </Box>
                         <FormControl
                             minWidth={{ md: '320px' }}
                             width={{ base: '100%', md: '325px' }}
@@ -55,19 +75,7 @@ const CreateNewOrder = () => {
                             <Input
                                 type='text'
                                 placeholder='Tên khách hàng'
-                                {...register('name', {
-                                    required: 'Tên khách hàng không được trống!',
-                                    onBlur: (e) => {
-                                        if (e.target.value.trim().length < 2)
-                                            setError('name', {
-                                                type: 'required',
-                                                message: 'Tên khách hàng không được trống!',
-                                            });
-                                    },
-                                    onChange: (e) => {
-                                        clearErrors('name');
-                                    },
-                                })}
+                                {...register('name')}
                             />
                             {errors.name ? (
                                 <FormErrorMessage>{errors.name?.message}</FormErrorMessage>
@@ -81,23 +89,8 @@ const CreateNewOrder = () => {
                             isInvalid={errors.dayOfReceive ? true : false}
                         >
                             <FormLabel htmlFor='date'>Ngày nhận đơn</FormLabel>
-                            <Input
-                                type='date'
-                                {...register('dayOfReceive', {
-                                    required: 'Tên khách hàng không được trống!',
-                                    onBlur: (e) => {
-                                        if (e.target.value.trim().length < 2)
-                                            setError('dayOfReceive', {
-                                                type: 'required',
-                                                message: 'Vui lòng chọn ngày nhận',
-                                            });
-                                    },
-                                    onChange: (e) => {
-                                        clearErrors('dayOfReceive');
-                                    },
-                                })}
-                            />
-                            {errors.dayOfReceive?.type === 'required' ? (
+                            <Input type='date' {...register('dayOfReceive')} />
+                            {errors.dayOfReceive ? (
                                 <FormErrorMessage>
                                     {errors.dayOfReceive?.message}
                                 </FormErrorMessage>
@@ -108,13 +101,10 @@ const CreateNewOrder = () => {
                         <FormControl
                             minWidth={{ md: '320px' }}
                             width={{ base: '100%', md: '325px' }}
+                            mb={{ base: "5", lg: "" }}
                         >
                             <FormLabel htmlFor='customerName'>Ngày hẹn giao</FormLabel>
-                            <Input
-                                type='date'
-                                {...register('dayOfAppointment')}
-                            // value={result}
-                            />
+                            <Input type='date' {...register('dayOfAppointment')} />
                             <FormErrorMessage>{ }</FormErrorMessage>
                         </FormControl>
                         <FormControl

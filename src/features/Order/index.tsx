@@ -5,10 +5,11 @@ import NotFound from '../Error/NotFound';
 import DisplayAllOrder from './DisplayAllOrder';
 import CreateDetailOrder from './CreateDetailOrder';
 import OrderDetail from './OrderDetail';
+import SidebarWithHeader from '../../components/sidebar/SideBar';
 
 const Order = () => {
     return (
-        <>
+        <SidebarWithHeader>
             <Routes>
                 <Route element={<DisplayAllOrder />} path="/" />
                 <Route element={<CreateNewOrder />} path="create-order" />
@@ -16,7 +17,7 @@ const Order = () => {
                 <Route element={<OrderDetail />} path="/:orderId" />
                 <Route element={<NotFound />} path="*" />
             </Routes>
-        </>
+        </SidebarWithHeader>
     )
 }
 

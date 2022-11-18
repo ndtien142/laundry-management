@@ -5,7 +5,7 @@ export const useAddNewOrder = () => {
   const queryClient = useQueryClient();
   return useMutation(['addNewOrder'], postNewOrder, {
     onSuccess: (data) => {
-      console.log(data);
+      queryClient.invalidateQueries(['order']);
     },
   });
 };

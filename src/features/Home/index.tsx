@@ -6,6 +6,7 @@ import TableUI from '../../components/ui/TableUI';
 import { useAppDispatch } from '../../redux/hooks';
 import { replaceAllOrder } from '../Order/OrderSlice';
 import { useGetAllOrder } from '../../hooks/useGetAllOrder';
+import SidebarWithHeader from '../../components/sidebar/SideBar';
 
 
 const Home = () => {
@@ -15,7 +16,7 @@ const Home = () => {
         isSuccess && dispatch(replaceAllOrder(data))
     }, [data, isSuccess, dispatch])
     return (
-        <>
+        <SidebarWithHeader>
             <Center as="section" justifyContent="space-between" gap="2" mb="4" flexDirection={{ base: "column", lg: "row" }}>
                 <Widget path='./image/invoice-svgrepo-com.svg' bgc="#441bb8 " title="Tổng đơn nhận" quantity={"17"} />
                 <Widget path='./image/iconmonstr-coin-3.svg' bgc="#51c0f1" title="Tổng doanh thu" quantity={`$250`} />
@@ -25,7 +26,7 @@ const Home = () => {
                 <HeaderTable />
             </Center>
             <TableUI />
-        </>
+        </SidebarWithHeader>
     );
 };
 

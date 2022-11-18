@@ -10,7 +10,15 @@ export const customTheme = extendTheme({
       blurColor: {
         default: '#d0d0d0',
       },
-      mainBg: '#F8F8F8',
+      mainBg: { default: '#F8F8F8' },
+      grey: {
+        default: 'gray.200',
+        _dark: 'gray.700',
+      },
+      whiteColor: {
+        default: '#FFF',
+        _dark: 'gray.900',
+      },
     },
   },
   breakpoint: {
@@ -23,7 +31,7 @@ export const customTheme = extendTheme({
   },
   fonts: {
     body: 'system-ui, sans-serif',
-    heading: 'Georgia, serif',
+    heading: 'monospace, serif',
     mono: 'Menlo, monospace',
   },
   fontSizes: {

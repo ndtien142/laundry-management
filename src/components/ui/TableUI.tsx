@@ -23,7 +23,7 @@ const TableUI = () => {
             overflowY="auto"
             overflowX="auto"
             width="100%"
-            maxWidth={{ base: "390px", md: "640px", lg: "none" }}
+            maxWidth={{ base: "315px", md: "640px", lg: "none" }}
             height="400px"
         >
             <Table variant='simple'>

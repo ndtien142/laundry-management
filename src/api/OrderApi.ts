@@ -31,3 +31,14 @@ export const getDetailOrder = async ({ queryKey }: any) => {
   const response = await apiOrder.get<Order>(`/order/${orderId}.json`);
   return response.data;
 };
+
+// Next Id api
+export const getNextIdOrder = async () => {
+  const response = await apiOrder.get<string | number>(`/nextId.json`);
+  return response.data;
+};
+
+export const postNewNextId = async (nextId: string | number) => {
+  const response = await apiOrder.put<string | number>(`nextId.json`, nextId);
+  return response.status;
+};
