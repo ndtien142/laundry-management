@@ -1,6 +1,6 @@
 import { Table, Thead, Tbody, Tr, Th, TableContainer } from '@chakra-ui/react';
 import React from 'react';
-import { useGetAllOrder } from '../../hooks/useGetAllOrder';
+import { useGetAllOrder } from '../../features/Order/hooks/useGetAllOrder';
 import { Order } from '../../types/OrderInterface';
 import TableUILoadingSkeleton from '../loading/TableUILoadingSkeleton';
 import RowTableUI from './RowTableUI';
@@ -27,13 +27,13 @@ const TableUI = () => {
             height="400px"
         >
             <Table variant='simple'>
-                <Thead position='sticky' top={0} bgColor='#FFF' zIndex='10'>
+                <Thead position='sticky' top={0} bgColor='#FFF' zIndex='10' >
                     <Tr>
-                        <Th>Mã đơn hàng</Th>
-                        <Th>Tên khách hàng</Th>
-                        <Th>Trạng thái</Th>
-                        <Th>Ngày nhận đơn</Th>
-                        <Th>Chỉnh sửa/Xoá</Th>
+                        <Th fontSize="sm" fontWeight="600">Mã đơn hàng</Th>
+                        <Th fontSize="sm" fontWeight="600">Tên khách hàng</Th>
+                        <Th fontSize="sm" fontWeight="600">Trạng thái</Th>
+                        <Th fontSize="sm" fontWeight="600">Ngày nhận đơn</Th>
+                        <Th fontSize="sm" fontWeight="600">Chỉnh sửa/Xoá</Th>
                     </Tr>
                 </Thead>
                 <Tbody>

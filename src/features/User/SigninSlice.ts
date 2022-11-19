@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-interface LoginState {
+interface Signin {
   email: string;
   idToken: string | null;
   isAuthentication: boolean;
@@ -10,22 +10,22 @@ interface UserLogin {
   idToken: string | null;
 }
 
-const initialState: LoginState = {
+const initialState: Signin = {
   email: '',
   idToken: null,
   isAuthentication: false,
 };
 
-const LoginSlice = createSlice({
+const SignInSlice = createSlice({
   name: 'login',
   initialState,
   reducers: {
-    setInfoUserLogin: (state, action: PayloadAction<UserLogin>) => {
+    setInfoUserSignin: (state, action: PayloadAction<UserLogin>) => {
       state.email = action.payload.email;
       state.idToken = action.payload.idToken;
       state.isAuthentication = true;
     },
-    resetInfoUserLogin: (state) => {
+    resetInfoUserSignin: (state) => {
       state.email = '';
       state.idToken = null;
       state.isAuthentication = false;
@@ -33,5 +33,5 @@ const LoginSlice = createSlice({
   },
 });
 
-export const { setInfoUserLogin, resetInfoUserLogin } = LoginSlice.actions;
-export default LoginSlice.reducer;
+export const { setInfoUserSignin, resetInfoUserSignin } = SignInSlice.actions;
+export default SignInSlice.reducer;

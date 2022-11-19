@@ -15,17 +15,24 @@ import {
 import { MobileProps } from './interfaceSideBar';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import MenuIcon from '@mui/icons-material/Menu';
-import { Link as RouteLink } from 'react-router-dom';
+import { Link as RouteLink, useNavigate } from 'react-router-dom';
+import { useUser } from '../../features/User/hooks/useUser';
 
 export const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
+    const { clearUser } = useUser();
+    const navigate = useNavigate();
+    const handleSigOut = () => {
+        clearUser();
+        navigate('/login');
+    };
     return (
         <Flex
-            bgColor="mainBg"
+            bgColor='mainBg'
             px={{ base: 4, md: 4 }}
             height='20'
             alignItems='center'
             borderBottomWidth='1px'
-            borderBottomColor="grey"
+            borderBottomColor='grey'
             justifyContent={{ base: 'space-between', md: 'flex-end' }}
             {...rest}
         >
@@ -47,7 +54,7 @@ export const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
                 Laundry
             </Text>
 
-            <HStack spacing={{ base: '0', md: '6' }} bgColor="mainBg">
+            <HStack spacing={{ base: '0', md: '6' }} bgColor='mainBg'>
                 <Flex alignItems={'center'}>
                     <Menu>
                         <MenuButton
@@ -78,15 +85,11 @@ export const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
                                 </Box>
                             </HStack>
                         </MenuButton>
-                        <MenuList
-                            bg="whiteColor"
-                            borderColor="grey"
-                            zIndex='100'
-                        >
+                        <MenuList bg='whiteColor' borderColor='grey' zIndex='100'>
                             <MenuItem>Thông tin cá nhân</MenuItem>
                             <MenuItem>Cài đặt</MenuItem>
                             <MenuDivider />
-                            <MenuItem>Đăng xuất</MenuItem>
+                            <MenuItem onClick={handleSigOut}>Đăng xuất</MenuItem>
                         </MenuList>
                     </Menu>
                 </Flex>

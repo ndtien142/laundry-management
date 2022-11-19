@@ -30,9 +30,9 @@ export const customTheme = extendTheme({
     '2xl': '96em',
   },
   fonts: {
-    body: 'system-ui, sans-serif',
-    heading: 'monospace, serif',
-    mono: 'Menlo, monospace',
+    body: 'Poppins, sans-serif',
+    heading: 'Poppins, sans-serif',
+    mono: 'Poppins, monospace',
   },
   fontSizes: {
     logo: '40px',

@@ -2,7 +2,7 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 
-export interface LoginState {
+export interface SignInState {
   email: string;
   password: string;
 }
@@ -18,7 +18,7 @@ const schema = yup.object().shape({
     .min(6, 'Mật khẩu phải lớn hơn 6'),
 });
 
-export const useLoginValidation = () =>
-  useForm<LoginState>({
+export const useSignInValidation = () =>
+  useForm<SignInState>({
     resolver: yupResolver(schema),
   });

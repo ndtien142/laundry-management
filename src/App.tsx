@@ -1,32 +1,27 @@
 import React from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, useNavigate } from 'react-router-dom';
 import NotFound from './features/Error/NotFound';
-import NotLogin from './features/Error/NotLogin';
 import Home from './features/Home';
-import Login from './features/Login/Login';
+import Signin from './features/User/Signin';
 import Order from './features/Order';
-import { useAppSelector } from './redux/hooks';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import { useUser } from './features/User/hooks/useUser';
+import { useEffect } from 'react'
 
 function App() {
-  const authContext = useAppSelector((state) => state.userLogin);
+  const { user } = useUser()
+  const navigate = useNavigate()
+  useEffect(() => {
+    if (!user?.token) navigate("/login")
+  }, [])
   return (
     <>
       <Routes>
-        {!authContext.isAuthentication && !authContext.idToken && (
-          <>
-            <Route index element={<Home />} />
-            <Route element={<Home />} path='/' />
-            <Route element={<Order />} path='order/*' />
-            <Route element={<NotFound />} path='*' />
-          </>
-        )}
-        <Route element={<Login />} path='login' />
-        {authContext.isAuthentication && authContext.idToken && (
-          <>
-            <Route element={<NotLogin />} path='*' />
-          </>
-        )}
+        <Route index element={<Home />} />
+        <Route element={<Home />} path='/' />
+        <Route element={<Order />} path='order/*' />
+        <Route element={<NotFound />} path='*' />
+        <Route element={<Signin />} path='login' />
       </Routes>
       <ReactQueryDevtools />
     </>

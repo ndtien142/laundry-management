@@ -16,32 +16,41 @@ import { useNavigate } from 'react-router-dom';
 import { Textarea } from '@chakra-ui/react';
 import { Order } from '../../types/OrderInterface';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { getNextIdOrder, postNewNextId, postNewOrder } from '../../api/OrderApi';
-import { useCreateOrderValidation } from '../../hooks/useCreateOrderValidation';
+import {
+    getNextIdOrder,
+    postNewNextId,
+    postNewOrder,
+} from '../../api/OrderApi';
+import { useCreateOrderValidation } from './hooks/useCreateOrderValidation';
 import { Spinner } from '@chakra-ui/react';
+import { queryKeys } from '../../react-query/constants';
+import { useCustomToast } from '../../components/ui/FeedBack';
 
 const CreateNewOrder = () => {
-    const navigate = useNavigate()
-    const queryClient = useQueryClient()
-    const { data: getNextId } = useQuery(['nextId'], getNextIdOrder, {
-        staleTime: Infinity,
+    const navigate = useNavigate();
+    const queryClient = useQueryClient();
+    const toast = useCustomToast()
+    const { data: getNextId } = useQuery([queryKeys.nextId], getNextIdOrder, {
+        staleTime: 1000 * 60,
     });
     const { mutate: createNewOrder } = useMutation(postNewOrder);
     const { mutate: postNextId } = useMutation(postNewNextId, {
         onSuccess: () => {
-            queryClient.invalidateQueries(["nextId"])
-        }
-    })
+            queryClient.invalidateQueries([queryKeys.nextId]);
+            toast({ title: "Thêm thành công", status: "success" })
+        },
+    });
     const {
         register,
         handleSubmit,
+        reset,
         formState: { errors },
     } = useCreateOrderValidation();
     const onSubmit: SubmitHandler<Order> = (data) => {
         // createNewOrder({ ...data, status: 'Pending', id: getNextId });
         // console.log({ ...data, status: 'Pending', id: getNextId });
-        postNextId(Number(getNextId) + 1)
-        navigate("/order")
+        postNextId(Number(getNextId) + 1);
+        reset()
     };
     return (
         <>
@@ -54,17 +63,20 @@ const CreateNewOrder = () => {
                         <Box
                             minWidth={{ md: '320px' }}
                             width={{ base: '100%', md: '325px' }}
-                            mb={{ base: "5", lg: "" }}
+                            mb={{ base: '5', lg: '' }}
                         >
-                            <Text mb="2" fontWeight="semibold">Mã đơn hàng</Text>
+                            <Text mb='2' fontWeight='semibold'>
+                                Mã đơn hàng
+                            </Text>
                             <Button
                                 disabled
-                                width="100%"
+                                width='100%'
                                 fontWeight='700'
-                                border="1px solid black"
-                                color="red"
-                            >{getNextId ? getNextId : <Spinner />}</Button>
-
+                                border='1px solid black'
+                                color='red'
+                            >
+                                {getNextId ? getNextId : <Spinner />}
+                            </Button>
                         </Box>
                         <FormControl
                             minWidth={{ md: '320px' }}
@@ -101,7 +113,7 @@ const CreateNewOrder = () => {
                         <FormControl
                             minWidth={{ md: '320px' }}
                             width={{ base: '100%', md: '325px' }}
-                            mb={{ base: "5", lg: "" }}
+                            mb={{ base: '5', lg: '' }}
                         >
                             <FormLabel htmlFor='customerName'>Ngày hẹn giao</FormLabel>
                             <Input type='date' {...register('dayOfAppointment')} />

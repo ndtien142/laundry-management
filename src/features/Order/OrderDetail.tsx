@@ -3,7 +3,7 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 import CardOrderInfoLoading from '../../components/loading/CardOrderInfoLoading';
 import OrderInfo from '../../components/ui/Card/OrderInfo';
-import { useGetDetailOrder } from '../../hooks/useGetDetailOrder';
+import { useGetDetailOrder } from './hooks/useGetDetailOrder';
 
 const OrderDetail = () => {
     const { orderId } = useParams();

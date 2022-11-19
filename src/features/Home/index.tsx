@@ -5,7 +5,7 @@ import HeaderTable from '../../components/ui/HeaderTable';
 import TableUI from '../../components/ui/TableUI';
 import { useAppDispatch } from '../../redux/hooks';
 import { replaceAllOrder } from '../Order/OrderSlice';
-import { useGetAllOrder } from '../../hooks/useGetAllOrder';
+import { useGetAllOrder } from '../Order/hooks/useGetAllOrder';
 import SidebarWithHeader from '../../components/sidebar/SideBar';
 
 

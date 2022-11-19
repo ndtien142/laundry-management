@@ -14,45 +14,30 @@ import {
     FormErrorMessage,
 } from '@chakra-ui/react';
 import { SubmitHandler } from 'react-hook-form';
+import { useAuth } from '../../auth/useAuth';
+import { SignInState, useSignInValidation } from './hooks/useSignInValidation';
+import { useUser } from './hooks/useUser';
 import { useNavigate } from 'react-router-dom';
-import { getDataUser } from '../../api/AuthContextAPI';
-import { useAppDispatch } from '../../redux/hooks';
-import { setInfoUserLogin } from './LoginSlice';
-import { useMutation } from '@tanstack/react-query';
 import { useEffect } from 'react';
-import { LoginState, useLoginValidation } from '../../hooks/useLoginValidation';
 
-interface LoginPayload {
-    email: string;
-    idToken: string | null;
-}
-
-export default function Login() {
+export default function Signin() {
     const {
         register,
         handleSubmit,
         formState: { errors },
-    } = useLoginValidation();
-    const dispatch = useAppDispatch();
+    } = useSignInValidation();
+    const auth = useAuth();
     const navigate = useNavigate();
-    const { mutate: loginMutation, isSuccess } = useMutation(
-        getDataUser,
-        {
-            onSuccess: (data) => {
-                const result: LoginPayload = {
-                    email: data.data.email,
-                    idToken: data.data.idToken,
-                };
-                dispatch(setInfoUserLogin({ ...result }));
-            },
-        }
-    );
-    useEffect(() => {
-        isSuccess && navigate('/');
-    }, [isSuccess, navigate]);
-    const onSubmit: SubmitHandler<LoginState> = (data) => {
-        loginMutation({ email: data.email, password: data.password });
+    const onSubmit: SubmitHandler<SignInState> = (data) => {
+        auth.signin(data.email, data.password);
     };
+    const { user } = useUser();
+    useEffect(() => {
+        if (user) {
+            navigate('/');
+        }
+    }, [user, auth, navigate]);
+
     return (
         <Flex
             minH={'100vh'}
