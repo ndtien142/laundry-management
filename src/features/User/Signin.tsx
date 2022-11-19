@@ -18,7 +18,6 @@ import { useAuth } from '../../auth/useAuth';
 import { SignInState, useSignInValidation } from './hooks/useSignInValidation';
 import { useUser } from './hooks/useUser';
 import { useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
 
 export default function Signin() {
     const {
@@ -32,12 +31,7 @@ export default function Signin() {
         auth.signin(data.email, data.password);
     };
     const { user } = useUser();
-    useEffect(() => {
-        if (user) {
-            navigate('/');
-        }
-    }, [user, auth, navigate]);
-
+    if (user) navigate("/")
     return (
         <Flex
             minH={'100vh'}

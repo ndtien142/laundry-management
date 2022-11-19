@@ -15,31 +15,19 @@ import { SubmitHandler } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { Textarea } from '@chakra-ui/react';
 import { Order } from '../../types/OrderInterface';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import {
-    getNextIdOrder,
-    postNewNextId,
-    postNewOrder,
-} from '../../api/OrderApi';
+import { useQuery } from '@tanstack/react-query';
+import { getNextIdOrder } from '../../api/OrderApi';
 import { useCreateOrderValidation } from './hooks/useCreateOrderValidation';
 import { Spinner } from '@chakra-ui/react';
 import { queryKeys } from '../../react-query/constants';
-import { useCustomToast } from '../../components/ui/FeedBack';
+import { useUpdateNextIdOrder } from './hooks/useUpdateNextIdOrder';
 
 const CreateNewOrder = () => {
     const navigate = useNavigate();
-    const queryClient = useQueryClient();
-    const toast = useCustomToast()
     const { data: getNextId } = useQuery([queryKeys.nextId], getNextIdOrder, {
         staleTime: 1000 * 60,
     });
-    const { mutate: createNewOrder } = useMutation(postNewOrder);
-    const { mutate: postNextId } = useMutation(postNewNextId, {
-        onSuccess: () => {
-            queryClient.invalidateQueries([queryKeys.nextId]);
-            toast({ title: "Thêm thành công", status: "success" })
-        },
-    });
+    const updateNextId = useUpdateNextIdOrder();
     const {
         register,
         handleSubmit,
@@ -49,8 +37,8 @@ const CreateNewOrder = () => {
     const onSubmit: SubmitHandler<Order> = (data) => {
         // createNewOrder({ ...data, status: 'Pending', id: getNextId });
         // console.log({ ...data, status: 'Pending', id: getNextId });
-        postNextId(Number(getNextId) + 1);
-        reset()
+        updateNextId(Number(getNextId) + 1);
+        reset();
     };
     return (
         <>

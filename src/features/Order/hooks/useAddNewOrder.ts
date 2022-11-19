@@ -9,7 +9,7 @@ import { queryKeys } from '../../../react-query/constants';
 import { Order } from '../../../types/OrderInterface';
 
 export const useAddNewOrder = (): UseMutateFunction<
-  Order,
+  void,
   unknown,
   Order,
   unknown

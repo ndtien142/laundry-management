@@ -16,14 +16,13 @@ export const getAllOrder = async () => {
 };
 
 export const postNewOrder = async (order: Order) => {
-  const response = await apiOrder.put<Order>(`/order/${order.id}.json`, {
+  await apiOrder.put<Order>(`/order/${order.id}.json`, {
     name: order.name,
     dayOfReceive: order.dayOfReceive,
     dayOfAppointment: order.dayOfAppointment,
     status: order.status,
     note: order.note,
   });
-  return response.data;
 };
 
 export const getDetailOrder = async ({ queryKey }: any) => {
@@ -32,13 +31,16 @@ export const getDetailOrder = async ({ queryKey }: any) => {
   return response.data;
 };
 
+export const deleteOrder = async (id: number) => {
+  await apiOrder.delete(`/order/${id}.json`);
+};
+
 // Next Id api
 export const getNextIdOrder = async () => {
   const response = await apiOrder.get<string | number>(`/nextId.json`);
   return response.data;
 };
 
-export const postNewNextId = async (nextId: string | number) => {
-  const response = await apiOrder.put<string | number>(`nextId.json`, nextId);
-  return response.status;
+export const postNewNextId = async (nextId: number) => {
+  await apiOrder.put<number>(`nextId.json`, nextId);
 };

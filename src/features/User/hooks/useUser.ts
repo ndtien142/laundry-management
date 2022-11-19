@@ -19,6 +19,7 @@ async function getUser(user: User | null): Promise<User | null> {
     data: { idToken: user?.token },
     headers: { 'Content-Type': 'application/json' },
   });
+  console.log('From use user: ', data);
   return data.users;
 }
 
@@ -27,10 +28,10 @@ export function useUser(): UseUser {
   const queryClient = useQueryClient();
   // Call useQuery to update user data from server
   useQuery([queryKeys.user], () => getUser(user), {
-    enabled: !!user,
-    onSuccess: (data) => {
-      console.log(data);
-      setUser(data);
+    // enabled: !!user,
+    onSuccess: (data: any) => {
+      console.log('Front use query', data);
+      setUser({ email: data[0]?.email, token: '' });
     },
   });
   // meant to be called from useAuth
@@ -49,8 +50,8 @@ export function useUser(): UseUser {
     clearStoredUser();
 
     // reset user to null in query client
-    queryClient.setQueryData([queryKeys.user], null);
-    queryClient.setQueryData([queryKeys.order], null);
+    queryClient.removeQueries([queryKeys.user]);
+    queryClient.removeQueries([queryKeys.order]);
   }
 
   return { user, updateUser, clearUser };

@@ -16,6 +16,7 @@ import PageviewIcon from '@mui/icons-material/Pageview';
 import { useAppDispatch } from '../../redux/hooks';
 import { deleteOrder } from '../../features/Order/OrderSlice';
 import { Link as RouteLink, useLocation } from 'react-router-dom';
+import { useDeleteOrder } from '../../features/Order/hooks/useDeleteOrder';
 
 interface Props {
     id: number | string;
@@ -27,7 +28,11 @@ interface Props {
 const RowTableUI: React.FC<Props> = ({ id, name, status, dayOfReceive }) => {
     const dispatch = useAppDispatch();
     const location = useLocation();
-    const handleDeleteOrder = () => dispatch(deleteOrder(id));
+    const deleteOrderFromServer = useDeleteOrder();
+    const handleDeleteOrder = () => {
+        dispatch(deleteOrder(id));
+        deleteOrderFromServer(Number(id))
+    };
     return (
         <>
             <Tr key={id}>
