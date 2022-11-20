@@ -1,20 +1,12 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Center } from "@chakra-ui/react"
 import Widget from '../../components/ui/Widget';
 import HeaderTable from '../../components/ui/HeaderTable';
 import TableUI from '../../components/ui/TableUI';
-import { useAppDispatch } from '../../redux/hooks';
-import { replaceAllOrder } from '../Order/OrderSlice';
-import { useGetAllOrder } from '../Order/hooks/useGetAllOrder';
 import SidebarWithHeader from '../../components/sidebar/SideBar';
 
 
 const Home = () => {
-    const { data, isSuccess } = useGetAllOrder()
-    const dispatch = useAppDispatch()
-    useEffect(() => {
-        isSuccess && dispatch(replaceAllOrder(data))
-    }, [data, isSuccess, dispatch])
     return (
         <SidebarWithHeader>
             <Center as="section" justifyContent="space-between" gap="2" mb="4" flexDirection={{ base: "column", lg: "row" }}>

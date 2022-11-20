@@ -18,6 +18,6 @@ export const useCustomToast = (): UseCustomToast => {
         isClosable: true,
         variant: 'subtle',
         position: 'bottom',
-        duration: 3000
+        duration: 1000
     });
 };

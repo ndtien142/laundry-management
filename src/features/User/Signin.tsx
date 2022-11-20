@@ -14,10 +14,8 @@ import {
     FormErrorMessage,
 } from '@chakra-ui/react';
 import { SubmitHandler } from 'react-hook-form';
-import { useAuth } from '../../auth/useAuth';
 import { SignInState, useSignInValidation } from './hooks/useSignInValidation';
-import { useUser } from './hooks/useUser';
-import { useNavigate } from 'react-router-dom';
+import { useUserSignin } from './hooks/useUserSignin';
 
 export default function Signin() {
     const {
@@ -25,13 +23,10 @@ export default function Signin() {
         handleSubmit,
         formState: { errors },
     } = useSignInValidation();
-    const auth = useAuth();
-    const navigate = useNavigate();
+    const signin = useUserSignin();
     const onSubmit: SubmitHandler<SignInState> = (data) => {
-        auth.signin(data.email, data.password);
+        signin({ email: data.email, password: data.password });
     };
-    const { user } = useUser();
-    if (user) navigate("/")
     return (
         <Flex
             minH={'100vh'}
@@ -67,7 +62,11 @@ export default function Signin() {
                                 isInvalid={errors?.password ? true : false}
                             >
                                 <FormLabel>Mật khẩu</FormLabel>
-                                <Input type='password' {...register('password')} />
+                                <Input
+                                    type='password'
+                                    {...register('password')}
+                                    autoComplete='false'
+                                />
                                 {errors?.password ? (
                                     <FormErrorMessage>{errors.password.message}</FormErrorMessage>
                                 ) : (

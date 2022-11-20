@@ -1,41 +1,57 @@
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { queryKeys } from '../../../react-query/constants';
-import { User } from '../../../types/User';
+import { useAppDispatch } from '../../../redux/hooks';
+import { setInfoUserSignin } from '../SigninSlice';
+import { NewUser, User, UserResponseRestAPI } from '../UserConstant';
 import { clearStoredUser, getStoredUser, setStoredUser } from './userStorage';
 
 interface UseUser {
   user: User | null;
-  updateUser: (user: User) => void;
+  updateUser: (user: UserResponseRestAPI) => void;
   clearUser: () => void;
 }
 
-async function getUser(user: User | null): Promise<User | null> {
-  if (!user?.token) return null;
+async function getAllDataUser(): Promise<NewUser[] | null> {
   const { data } = await axios({
-    baseURL: `https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=AIzaSyC6lFlEK-KyCgZA-3ZHgcFlpDD5x7bHkUg`,
-    method: 'POST',
-    data: { idToken: user?.token },
-    headers: { 'Content-Type': 'application/json' },
+    baseURL:
+      'https://laundry-54ff8-default-rtdb.asia-southeast1.firebasedatabase.app/user.json',
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
   });
-  console.log('From use user: ', data);
-  return data.users;
+  return data;
 }
 
 export function useUser(): UseUser {
   const [user, setUser] = useState<User | null>(getStoredUser());
   const queryClient = useQueryClient();
+  const dispatch = useAppDispatch();
   // Call useQuery to update user data from server
-  useQuery([queryKeys.user], () => getUser(user), {
-    // enabled: !!user,
-    onSuccess: (data: any) => {
-      console.log('Front use query', data);
-      setUser({ email: data[0]?.email, token: '' });
-    },
-  });
+  const { data: allUser, status } = useQuery(
+    [queryKeys.detailUser],
+    getAllDataUser
+  );
+  useEffect(() => {
+    if (status === 'success') {
+      allUser?.forEach((userA) => {
+        if (userA.email === user?.email) {
+          dispatch(
+            setInfoUserSignin({
+              email: userA.email,
+              idToken: userA.token,
+              authority: userA.authority,
+              userId: userA.id,
+            })
+          );
+        }
+      });
+    }
+  }, [allUser, dispatch, status, user?.email]);
   // meant to be called from useAuth
-  function updateUser(newUser: any): void {
+  function updateUser(newUser: UserResponseRestAPI): void {
     setUser({ email: newUser.email, token: newUser.idToken });
     setStoredUser({ email: newUser.email, token: newUser.idToken });
     queryClient.setQueriesData([queryKeys.user], newUser);
@@ -52,6 +68,7 @@ export function useUser(): UseUser {
     // reset user to null in query client
     queryClient.removeQueries([queryKeys.user]);
     queryClient.removeQueries([queryKeys.order]);
+    queryClient.removeQueries([queryKeys.detailUser]);
   }
 
   return { user, updateUser, clearUser };

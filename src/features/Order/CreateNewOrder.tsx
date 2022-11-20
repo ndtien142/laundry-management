@@ -20,14 +20,16 @@ import { getNextIdOrder } from '../../api/OrderApi';
 import { useCreateOrderValidation } from './hooks/useCreateOrderValidation';
 import { Spinner } from '@chakra-ui/react';
 import { queryKeys } from '../../react-query/constants';
-import { useUpdateNextIdOrder } from './hooks/useUpdateNextIdOrder';
+import { useAddNewOrder } from './hooks/useAddNewOrder';
+import { useAppSelector } from '../../redux/hooks';
 
 const CreateNewOrder = () => {
     const navigate = useNavigate();
     const { data: getNextId } = useQuery([queryKeys.nextId], getNextIdOrder, {
         staleTime: 1000 * 60,
     });
-    const updateNextId = useUpdateNextIdOrder();
+    const userId = useAppSelector(state => state.userLogin.userId)
+    const addNewOrder = useAddNewOrder()
     const {
         register,
         handleSubmit,
@@ -35,9 +37,8 @@ const CreateNewOrder = () => {
         formState: { errors },
     } = useCreateOrderValidation();
     const onSubmit: SubmitHandler<Order> = (data) => {
-        // createNewOrder({ ...data, status: 'Pending', id: getNextId });
+        addNewOrder({ ...data, status: 'Pending', id: Number(getNextId), idReceive: Number(userId) });
         // console.log({ ...data, status: 'Pending', id: getNextId });
-        updateNextId(Number(getNextId) + 1);
         reset();
     };
     return (

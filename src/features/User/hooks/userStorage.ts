@@ -1,4 +1,4 @@
-import { User } from '../../../types/User';
+import { User } from '../UserConstant';
 
 const USER_LOCALSTORAGE_KEY = 'laundry_app';
 

@@ -5,14 +5,14 @@ import Home from './features/Home';
 import Signin from './features/User/Signin';
 import Order from './features/Order';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import { useEffect } from 'react';
 import { useUser } from './features/User/hooks/useUser';
-import { useEffect } from 'react'
 
 function App() {
-  const { user } = useUser()
+  const { user } = useUser();
   const navigate = useNavigate()
   useEffect(() => {
-    if (!user?.token) navigate("/login")
+    if (!user) navigate("/login")
   }, [])
   return (
     <>

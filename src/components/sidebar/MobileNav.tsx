@@ -17,11 +17,16 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import MenuIcon from '@mui/icons-material/Menu';
 import { Link as RouteLink, useNavigate } from 'react-router-dom';
 import { useUser } from '../../features/User/hooks/useUser';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
+import { resetInfoUserSignin } from '../../features/User/SigninSlice';
 
 export const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
     const { clearUser } = useUser();
+    const dispatch = useAppDispatch();
+    const userInfo = useAppSelector((state) => state.userLogin);
     const navigate = useNavigate();
     const handleSigOut = () => {
+        dispatch(resetInfoUserSignin());
         clearUser();
         navigate('/login');
     };
@@ -75,9 +80,13 @@ export const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
                                     spacing='1px'
                                     ml='2'
                                 >
-                                    <Text fontSize='sm'>Justina Clark</Text>
-                                    <Text fontSize='xs' color='gray.600'>
-                                        Admin
+                                    <Text fontSize='sm'>{userInfo.email}</Text>
+                                    <Text
+                                        fontSize='xs'
+                                        color='gray.600'
+                                        textTransform='capitalize'
+                                    >
+                                        {userInfo.authority}
                                     </Text>
                                 </VStack>
                                 <Box display={{ base: 'none', md: 'flex' }}>

@@ -4,10 +4,14 @@ interface Signin {
   email: string;
   idToken: string | null;
   isAuthentication: boolean;
+  authority?: 'admin' | 'staff';
+  userId?: number;
 }
 interface UserLogin {
   email: string;
   idToken: string | null;
+  authority?: 'admin' | 'staff';
+  userId?: number;
 }
 
 const initialState: Signin = {
@@ -24,6 +28,8 @@ const SignInSlice = createSlice({
       state.email = action.payload.email;
       state.idToken = action.payload.idToken;
       state.isAuthentication = true;
+      state.authority = action.payload.authority;
+      state.userId = action.payload.userId;
     },
     resetInfoUserSignin: (state) => {
       state.email = '';

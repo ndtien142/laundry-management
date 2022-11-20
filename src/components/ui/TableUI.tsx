@@ -12,7 +12,7 @@ const TableUI = () => {
     if (status === 'success') {
         let key: number | string;
         for (key in data) {
-            transData.push({ ...data[key], id: key });
+            transData.push({ ...data[key], id: Number(key) });
         }
     }
     return (

@@ -22,6 +22,7 @@ export const postNewOrder = async (order: Order) => {
     dayOfAppointment: order.dayOfAppointment,
     status: order.status,
     note: order.note,
+    idReceive: order.idReceive,
   });
 };
 
@@ -37,7 +38,7 @@ export const deleteOrder = async (id: number) => {
 
 // Next Id api
 export const getNextIdOrder = async () => {
-  const response = await apiOrder.get<string | number>(`/nextId.json`);
+  const response = await apiOrder.get<number>(`/nextId.json`);
   return response.data;
 };
 

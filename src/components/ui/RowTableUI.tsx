@@ -62,7 +62,7 @@ const RowTableUI: React.FC<Props> = ({ id, name, status, dayOfReceive }) => {
                             bgColor='#fff'
                             borderRadius='50%'
                         />
-                        <MenuList>
+                        <MenuList zIndex="100">
                             <MenuItem
                                 icon={<PageviewIcon />}
                                 alignItems='center'

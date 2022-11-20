@@ -20,7 +20,7 @@ const OrderDetail = () => {
             gap='5'
         >
             <GridItem bg='#FFF' shadow='base' borderRadius='10'>
-                <OrderInfo {...data} id={orderId !== undefined ? orderId : ''} />
+                <OrderInfo {...data} id={Number(orderId)} />
             </GridItem>
             <GridItem bg='blue.200' shadow='base' borderRadius='10'></GridItem>
         </Grid>
